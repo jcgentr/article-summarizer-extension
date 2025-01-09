@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "Article Summarizer",
+  "description": "Save and summarize articles with AI",
+  "version": "1.0",
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "images/icon-16.png",
+      "32": "images/icon-32.png",
+      "48": "images/icon-48.png",
+      "128": "images/icon-128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "host_permissions": ["https://*/*"],
+  "permissions": ["storage", "activeTab", "scripting", "tabs"],
+  "externally_connectable": {
+    "matches": [
+      "http://localhost:3000/*",
+      "https://article-summarizer-sepia.vercel.app/*"
+    ]
+  }
+}

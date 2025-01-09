@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div id="loginSection" style="display: none">
+        <h2>Login Required</h2>
+        <p>Please login to summarize articles</p>
+        <button id="loginButton">Login</button>
+      </div>
+
+      <div id="articleSection" style="display: none">
+        <h2>Article Summarizer</h2>
+        <div id="currentArticle">
+          <button id="summarizeButton">Summarize Article</button>
+        </div>
+        <div class="mt-4">
+          <span id="status" class="text-sm"></span>
+        </div>
+      </div>
+    </div>
+    <script src="popup.js"></script>
+  </body>
+</html>
