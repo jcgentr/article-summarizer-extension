@@ -32,6 +32,10 @@ button:disabled {
   margin-top: 1rem;
 }
 
+.mr-1 {
+  margin-right: 0.25rem;
+}
+
 .pt-0 {
   padding-top: 0;
 }
@@ -88,18 +92,27 @@ button:disabled {
 }
 
 /* Typography */
-.text-lg {
-  font-size: 1.125rem;
-  line-height: 1.75rem;
-}
-
 .text-sm {
   font-size: 0.875rem;
   line-height: 1.25rem;
 }
 
+.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+.text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
 .font-semibold {
   font-weight: 600;
+}
+
+.text-white {
+  color: #ffffff;
 }
 
 .text-gray-500 {
@@ -135,6 +148,10 @@ button:disabled {
 /* Background */
 .bg-gray-100 {
   background-color: rgb(243, 244, 246);
+}
+
+.bg-black {
+  background-color: #000000;
 }
 
 /* Border */

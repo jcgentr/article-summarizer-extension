@@ -1,3 +1,4 @@
 - [ ] fix double login bug
 
+- [x] correct env vars
 - [x] cache current page's summary to prevent hitting API

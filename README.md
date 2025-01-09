@@ -1,4 +1,4 @@
-# Article Summarizer Chrome Extension
+# Gistr - Summarize articles with AI
 
 A Chrome extension that automatically summarizes articles using AI. Features include:
 
@@ -20,4 +20,4 @@ A Chrome extension that automatically summarizes articles using AI. Features inc
 1. Log in using the extension popup
 2. Navigate to any article
 3. Click the extension icon and "Summarize Article"
-4. View your summarized articles at [article-summarizer-sepia.vercel.app](https://article-summarizer-sepia.vercel.app)
+4. View your summarized articles at [getgistr.com](https://getgistr.com)

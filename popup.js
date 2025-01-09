@@ -1,9 +1,23 @@
+const ENV = {
+  development: {
+    API_URL: "http://localhost:3000",
+    WEB_URL: "http://localhost:3000",
+    allowedOrigins: ["http://localhost:3000/*"],
+  },
+  production: {
+    API_URL: "https://getgistr.com",
+    WEB_URL: "https://getgistr.com",
+    allowedOrigins: ["https://getgistr.com/*"],
+  },
+};
+
+// Determine environment based on extension URL or manifest
+const isDevelopment = !chrome.runtime.getManifest().update_url;
+const config = ENV[isDevelopment ? "development" : "production"];
+
 async function refreshArticleList() {
   const tabs = await chrome.tabs.query({
-    url: [
-      "http://localhost:3000/*", // Development; TODO only use one based on environment
-      "https://article-summarizer-sepia.vercel.app/*", // Production
-    ],
+    url: config.allowedOrigins,
   });
 
   // If articles page is open, refresh it
@@ -118,7 +132,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   loginButton.addEventListener("click", () => {
     // go trigger web app to send tokens to this chrome extension
-    window.open("http://localhost:3000/login/extension");
+    window.open(`${config.WEB_URL}/login/extension`);
   });
 
   summarizeButton.addEventListener("click", async () => {
@@ -140,7 +154,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (!tab?.url) return;
 
     try {
-      const response = await fetch("http://localhost:3000/api/articles", {
+      const response = await fetch(`${config.API_URL}/api/articles`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${supabaseAccessToken}`,

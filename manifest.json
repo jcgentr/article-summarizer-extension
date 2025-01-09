@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "Article Summarizer",
-  "description": "Save and summarize articles with AI",
+  "name": "Gistr",
+  "description": "Summarize articles with AI",
   "version": "1.0",
   "action": {
     "default_popup": "popup.html",
@@ -19,9 +19,6 @@
   "host_permissions": ["https://*/*"],
   "permissions": ["storage", "activeTab", "scripting", "tabs"],
   "externally_connectable": {
-    "matches": [
-      "http://localhost:3000/*",
-      "https://article-summarizer-sepia.vercel.app/*"
-    ]
+    "matches": ["http://localhost:3000/*", "https://getgistr.com/*"]
   }
 }

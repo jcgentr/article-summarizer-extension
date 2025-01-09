@@ -13,5 +13,5 @@ original_image = Image.open(input_image_path).convert("RGBA")
 # Generate and save resized images
 for size in sizes:
     resized_image = original_image.resize((size, size))
-    resized_image.save(f"{output_folder}icon_{size}x{size}.png", "PNG")
+    resized_image.save(f"{output_folder}icon-{size}.png", "PNG")
 
