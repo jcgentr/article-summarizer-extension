@@ -23,11 +23,19 @@ chrome.runtime.onMessageExternal.addListener(async function (
       supabaseRefreshToken: request.refresh_token,
     });
 
-    // Notify all extension views (like popup) that login succeeded
-    chrome.runtime.sendMessage({
-      type: "LOGIN_SUCCESS",
-      access_token: request.access_token,
-      refresh_token: request.refresh_token,
-    });
+    try {
+      // Notify all extension views (like popup) that login succeeded
+      await chrome.runtime.sendMessage({
+        type: "LOGIN_SUCCESS",
+        access_token: request.access_token,
+        refresh_token: request.refresh_token,
+      });
+    } catch (error) {
+      console.log("Error sending message:", error);
+      // Continue execution even if message fails
+    }
+
+    sendResponse({ status: "success" });
+    return true;
   }
 });
