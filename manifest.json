@@ -25,6 +25,6 @@
   "host_permissions": ["https://*/*"],
   "permissions": ["storage", "activeTab", "tabs"],
   "externally_connectable": {
-    "matches": ["http://localhost:3000/*", "https://getgistr.com/*"]
+    "matches": ["http://localhost:3000/*", "https://*.getgistr.com/*"]
   }
 }

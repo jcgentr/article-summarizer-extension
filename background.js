@@ -30,12 +30,13 @@ chrome.runtime.onMessageExternal.addListener(async function (
         access_token: request.access_token,
         refresh_token: request.refresh_token,
       });
+      sendResponse({ status: "success" });
     } catch (error) {
       console.log("Error sending message:", error);
       // Continue execution even if message fails
+      sendResponse({ status: "error" });
     }
 
-    sendResponse({ status: "success" });
     return true;
   }
 });
