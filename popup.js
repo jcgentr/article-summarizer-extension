@@ -5,9 +5,9 @@ const ENV = {
     allowedOrigins: ["http://localhost:3000/*"],
   },
   production: {
-    API_URL: "https://getgistr.com",
-    WEB_URL: "https://getgistr.com",
-    allowedOrigins: ["https://getgistr.com/*"],
+    API_URL: "https://www.getgistr.com",
+    WEB_URL: "https://www.getgistr.com",
+    allowedOrigins: ["https://*.getgistr.com/*"],
   },
 };
 
