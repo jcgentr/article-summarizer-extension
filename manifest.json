@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Gistr",
-  "description": "Summarize articles with AI",
-  "version": "0.0.3",
+  "description": "Transform lengthy web articles into clear, concise summaries with AI. Save time and stay informed with Gistr's Chrome extension and web app.",
+  "version": "0.0.4",
   "action": {
     "default_popup": "popup.html",
     "default_icon": {

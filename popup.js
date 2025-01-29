@@ -5,8 +5,8 @@ const ENV = {
     allowedOrigins: ["http://localhost:3000/*"],
   },
   production: {
-    API_URL: "https://www.getgistr.com",
-    WEB_URL: "https://www.getgistr.com",
+    API_URL: "https://app.getgistr.com",
+    WEB_URL: "https://app.getgistr.com",
     allowedOrigins: ["https://*.getgistr.com/*"],
   },
 };
@@ -168,6 +168,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       if (!response.ok) {
         const error = await response.json();
+        console.log(error);
         if (response.status === 401) {
           // Token expired or invalid - clear tokens and show login
           await chrome.storage.local.set({
