@@ -47,34 +47,81 @@ async function cleanupStorage() {
 
 function createArticlePreview(processedArticle) {
   const preview = document.createElement("div");
+  preview.className = "flex flex-col gap-4";
   preview.innerHTML = `
-      <div class="flex flex-col gap-1">
-        <h2 class="font-semibold text-lg">${
-          processedArticle.title || "Untitled"
-        }</h2>
+      <div class="flex flex-col gap-2">
+        <h2 class="heading">${processedArticle.title || "Untitled"}</h2>
         ${
           processedArticle.author
-            ? `<p class="mt-0 text-sm text-gray-500">By ${processedArticle.author}</p>`
+            ? `<p class="author-line">
+                <svg 
+                  xmlns="http://www.w3.org/2000/svg" 
+                  width="14" 
+                  height="14" 
+                  viewBox="0 0 24 24" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  stroke-width="2" 
+                  stroke-linecap="round" 
+                  stroke-linejoin="round"
+                  class="author-icon"
+                >
+                  <circle cx="12" cy="8" r="5"/>
+                  <path d="M20 21a8 8 0 1 0-16 0"/>
+                </svg>
+                <span>${processedArticle.author}</span>
+              </p>`
             : ""
         }
-        <div class="flex items-center gap-2 text-sm text-gray-500">
-          <span>${processedArticle.word_count} words | ${
-    processedArticle.read_time
-  } min read</span>
+      </div>
+      <p class="text-sm text-muted-foreground">${processedArticle.summary}</p>
+      <div class="flex items-center gap-2 text-sm">
+        <div class="flex items-center gap-1">
+          <svg 
+            xmlns="http://www.w3.org/2000/svg" 
+            width="14" 
+            height="14" 
+            viewBox="0 0 24 24" 
+            fill="none" 
+            stroke="currentColor" 
+            stroke-width="2" 
+            stroke-linecap="round" 
+            stroke-linejoin="round"
+            class="text-muted-foreground"
+          >
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+          <span class="text-muted-foreground">${processedArticle.word_count.toLocaleString()} words</span>
+        </div>
+        <div class="flex items-center gap-1">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor" 
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="text-muted-foreground"
+          >
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          <span class="text-muted-foreground">${
+            processedArticle.read_time
+          } min read</span>
         </div>
       </div>
-      <p class="text-sm text-gray-600">${processedArticle.summary}</p>
-      <div class="flex items-center gap-2 text-sm text-gray-500">
+      <div class="flex items-center gap-2 text-sm">
         ${
           processedArticle.tags
             ? `
           <div class="flex gap-2 flex-wrap">
             ${processedArticle.tags
               .split(",")
-              .map(
-                (tag) =>
-                  `<span class="bg-gray-100 px-2 py-0.5 rounded-full">${tag.trim()}</span>`
-              )
+              .map((tag) => `<span class="tag-pill">${tag.trim()}</span>`)
               .join("")}
           </div>
         `
@@ -85,7 +132,20 @@ function createArticlePreview(processedArticle) {
   return preview;
 }
 
+function updateStatus(message, type = "success") {
+  const container = document.querySelector(".status-container");
+  const statusElement = document.getElementById("status");
+
+  statusElement.textContent = message;
+  container.setAttribute("data-status", type);
+
+  // Show the container if it was hidden
+  container.style.display = message ? "block" : "none";
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
+  initializeTheme();
+
   chrome.storage.local.getBytesInUse(null, function (bytesUsed) {
     console.log(`Storage used: ${bytesUsed / 1024}KB of 10MB`);
   });
@@ -209,13 +269,11 @@ document.addEventListener("DOMContentLoaded", async () => {
       currentArticle.appendChild(createArticlePreview(processedArticle));
       summarizeButton.remove();
 
-      statusElement.textContent = "Article saved successfully!";
-      statusElement.className = "text-sm text-green-600";
+      updateStatus("Summary complete!", "success");
 
       refreshArticleList();
     } catch (error) {
-      statusElement.textContent = "Error summarizing article: " + error.message;
-      statusElement.className = "text-sm text-red-600";
+      updateStatus("Failed to summarize article", "error");
     } finally {
       // Reset button state
       summarizeButton.disabled = false;
@@ -223,3 +281,56 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 });
+
+// Theme Management
+const themeButtons = {
+  light: document.getElementById("themeLightButton"),
+  dark: document.getElementById("themeDarkButton"),
+  system: document.getElementById("themeSystemButton"),
+};
+
+// Apply theme and update button states
+function applyTheme(theme) {
+  // Remove active state from all buttons
+  Object.values(themeButtons).forEach((button) => {
+    button.setAttribute("data-active", "false");
+  });
+
+  // Set active state for current theme button
+  themeButtons[theme].setAttribute("data-active", "true");
+
+  if (theme === "system") {
+    // Check system preference
+    const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
+      .matches
+      ? "dark"
+      : "light";
+    document.documentElement.classList.toggle("dark", systemTheme === "dark");
+  } else {
+    document.documentElement.classList.toggle("dark", theme === "dark");
+  }
+
+  // Save theme preference
+  localStorage.setItem("theme-preference", theme);
+}
+
+// Initialize theme
+function initializeTheme() {
+  const savedTheme = localStorage.getItem("theme-preference") || "system";
+  applyTheme(savedTheme);
+}
+
+// Add click handlers for theme buttons
+Object.entries(themeButtons).forEach(([theme, button]) => {
+  button.addEventListener("click", () => applyTheme(theme));
+});
+
+// Listen for system theme changes
+window
+  .matchMedia("(prefers-color-scheme: dark)")
+  .addEventListener("change", () => {
+    const currentTheme = localStorage.getItem("theme-preference");
+    if (currentTheme === "system") {
+      applyTheme("system");
+    }
+  });

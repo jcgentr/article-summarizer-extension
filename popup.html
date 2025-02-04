@@ -5,23 +5,91 @@
   </head>
   <body>
     <div class="container">
-      <h2 class="flex items-center mt-0 bg-black text-white p-4">
-        <img src="images/icon-32.png" class="mr-1" /><span class="text-2xl"
-          >Gistr</span
-        >
-      </h2>
-      <div id="loginSection" style="display: none">
-        <h2>Login Required</h2>
-        <p>Please login to summarize articles</p>
-        <button id="loginButton">Login</button>
+      <div class="header">
+        <div class="header-logo">
+          <img src="images/icon-32.png" class="logo-icon" />
+          <span class="logo-text">Gistr</span>
+        </div>
+        <div class="theme-controls">
+          <button id="themeLightButton" class="theme-button" title="Light Mode">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="4" />
+              <path d="M12 2v2" />
+              <path d="M12 20v2" />
+              <path d="m4.93 4.93 1.41 1.41" />
+              <path d="m17.66 17.66 1.41 1.41" />
+              <path d="M2 12h2" />
+              <path d="M20 12h2" />
+              <path d="m6.34 17.66-1.41 1.41" />
+              <path d="m19.07 4.93-1.41 1.41" />
+            </svg>
+          </button>
+          <button id="themeDarkButton" class="theme-button" title="Dark Mode">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+            </svg>
+          </button>
+          <button
+            id="themeSystemButton"
+            class="theme-button"
+            title="System Theme"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+              <line x1="8" y1="21" x2="16" y2="21" />
+              <line x1="12" y1="17" x2="12" y2="21" />
+            </svg>
+          </button>
+        </div>
       </div>
 
-      <div id="articleSection" style="display: none">
-        <div id="currentArticle">
-          <button id="summarizeButton">Summarize Article</button>
+      <div class="content">
+        <div id="loginSection" class="login-section" style="display: none">
+          <div class="text-center">
+            <h2 class="heading">Login Required</h2>
+            <p class="subtext">Please login to summarize articles</p>
+          </div>
+          <button id="loginButton" class="btn-primary">Login</button>
         </div>
-        <div class="mt-4">
-          <span id="status" class="text-sm"></span>
+
+        <div id="articleSection" class="article-section" style="display: none">
+          <button id="summarizeButton" class="btn-primary">
+            Summarize Article
+          </button>
+          <div id="currentArticle" class="card"></div>
+          <div class="status-container">
+            <span id="status" class="status-text"></span>
+          </div>
         </div>
       </div>
     </div>
